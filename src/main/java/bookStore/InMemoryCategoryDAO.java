@@ -15,6 +15,26 @@ import java.util.stream.Collectors;
 
 public class InMemoryCategoryDAO {
 
+    private static InMemoryCategoryDAO instance;
+    private List<Category> categoriesInMemory;
+
+    private InMemoryCategoryDAO() {
+        categoriesInMemory = initializeCategories();
+    }
+
+    public static InMemoryCategoryDAO getInstance() {
+        //Sprawdzamy z uwagi na wielowątkowość aby na pewno tylko jeden wątek utworzył instancję
+        if (instance == null) {
+            synchronized (InMemoryCategoryDAO.class) {
+                if (instance == null) {
+                    instance = new InMemoryCategoryDAO();
+                }
+            }
+        }
+        return instance;
+    }
+
+
     public List<Category> initializeCategories() {
         List<String> linesFromFile = null;
         try {
@@ -22,7 +42,7 @@ public class InMemoryCategoryDAO {
         } catch (IOException e) {
             e.printStackTrace();
         }
-      return   populateCategories(linesFromFile);
+        return populateCategories(linesFromFile);
     }
 
     private List<Category> populateCategories(List<String> linesFromFile) {
