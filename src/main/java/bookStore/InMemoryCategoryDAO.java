@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 //Data Acess Object - DAO
 //Data Transfer Object - DTO
 
-public class InMemoryCategoryDAO {
+public class InMemoryCategoryDAO implements CategorySources{
 
     private static InMemoryCategoryDAO instance;
     private List<Category> categoriesInMemory;
@@ -35,7 +35,7 @@ public class InMemoryCategoryDAO {
     }
 
 
-    public List<Category> initializeCategories() {
+    private List<Category> initializeCategories() {
         List<String> linesFromFile = null;
         try {
             linesFromFile = Files.readAllLines(Paths.get("/home/bystry/IdeaProjects/sda9intermediate/src/main/resources/kategorie.txt"), Charset.forName(("UTF-16")));
@@ -82,5 +82,25 @@ public class InMemoryCategoryDAO {
     private int countSpaces(Category category) {
         return category.getName().startsWith(" ") ?
                 category.getName().split("\\S")[0].length() : 0;
+    }
+
+    @Override
+    public void updateCategory(Category category) {
+
+    }
+
+    @Override
+    public List<Category> findCategoriesByName(String name) {
+        return null;
+    }
+
+    @Override
+    public List<Category> getCategories() {
+        return null;
+    }
+
+    @Override
+    public Category findCategoryById(Integer id) {
+        return null;
     }
 }

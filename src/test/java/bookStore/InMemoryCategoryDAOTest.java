@@ -2,14 +2,18 @@ package bookStore;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.List;
 
 class InMemoryCategoryDAOTest {
+    private InMemoryCategoryDAO inMemoryCategoryDAO = Mockito.mock(InMemoryCategoryDAO.class);
+
+
     @Test
     void shouldReturnCategoriesFromText() {
         //given
-        InMemoryCategoryDAO inMemoryCategoryDAO = new InMemoryCategoryDAO();
+        InMemoryCategoryDAO inMemoryCategoryDAO = InMemoryCategoryDAO.getInstance();
         Category kat1;
         Category kat2;
         Category kat3;
@@ -20,7 +24,7 @@ class InMemoryCategoryDAOTest {
         String expectedNameID2 = "Powieści";
         String expectedNameID3 = "Fantastyka";
         //when
-        List<Category> list = inMemoryCategoryDAO.initializeCategories();
+        List<Category> list = inMemoryCategoryDAO.getCategories();
         kat1 = list.stream()
                 .filter(e -> e.getId().equals(1))
                 .findFirst()
