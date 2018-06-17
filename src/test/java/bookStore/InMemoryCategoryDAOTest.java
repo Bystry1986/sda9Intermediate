@@ -1,13 +1,14 @@
 package bookStore;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.List;
 
 class InMemoryCategoryDAOTest {
-    private InMemoryCategoryDAO inMemoryCategoryDAO = Mockito.mock(InMemoryCategoryDAO.class);
+    //private InMemoryCategoryDAO inMemoryCategoryDAO = Mockito.spy(new InMemoryCategoryDAO());
 
 
     @Test

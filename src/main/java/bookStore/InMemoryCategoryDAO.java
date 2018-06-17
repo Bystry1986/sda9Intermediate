@@ -1,5 +1,7 @@
 package bookStore;
 
+import org.apache.commons.lang3.NotImplementedException;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -7,13 +9,14 @@ import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 //Data Acess Object - DAO
 //Data Transfer Object - DTO
 
-public class InMemoryCategoryDAO implements CategorySources{
+public class InMemoryCategoryDAO implements CategorySources {
 
     private static InMemoryCategoryDAO instance;
     private List<Category> categoriesInMemory;
@@ -34,15 +37,19 @@ public class InMemoryCategoryDAO implements CategorySources{
         return instance;
     }
 
-
     private List<Category> initializeCategories() {
+        List<String> linesFromFile = readDataFromFile();
+        return populateCategories(linesFromFile);
+    }
+
+    public List<String> readDataFromFile() {
         List<String> linesFromFile = null;
         try {
             linesFromFile = Files.readAllLines(Paths.get("/home/bystry/IdeaProjects/sda9intermediate/src/main/resources/kategorie.txt"), Charset.forName(("UTF-16")));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return populateCategories(linesFromFile);
+        return linesFromFile;
     }
 
     private List<Category> populateCategories(List<String> linesFromFile) {
@@ -86,21 +93,25 @@ public class InMemoryCategoryDAO implements CategorySources{
 
     @Override
     public void updateCategory(Category category) {
-
+        throw new NotImplementedException("E!");
     }
 
     @Override
     public List<Category> findCategoriesByName(String name) {
-        return null;
+        return categoriesInMemory.stream()
+                .filter(category -> category.getName().equals(name))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Category> getCategories() {
-        return null;
+        return categoriesInMemory;
     }
 
     @Override
-    public Category findCategoryById(Integer id) {
-        return null;
+    public Optional<Category> findCategoryById(Integer id) {
+        return categoriesInMemory.stream()
+                .filter(category -> category.getId().equals(id))
+                .findFirst();
     }
 }
