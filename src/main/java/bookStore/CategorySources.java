@@ -1,11 +1,12 @@
 package bookStore;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CategorySources {
     void updateCategory(Category category);
 
     List<Category> findCategoriesByName(String name);
     List<Category> getCategories();
-    Category findCategoryById(Integer id);
+    Optional<Category> findCategoryById(Integer id);
 }
